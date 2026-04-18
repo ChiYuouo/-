@@ -75,7 +75,6 @@ public class ShopController {
         Page<Shop> page = shopService.query()
                 .eq("type_id", typeId)
                 .page(new Page<>(current, SystemConstants.DEFAULT_PAGE_SIZE));
-        page.setOptimizeCountSql(false);
         // 返回数据
         return Result.ok(page.getRecords());
     }
