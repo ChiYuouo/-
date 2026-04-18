@@ -89,6 +89,14 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 //            //成功，开启独立线程实现缓存重建
 //            CACHE_REBUILD_EXECUTOR.submit(()->{
 //                try {
+//        String shopJson = stringRedisTemplate.opsForValue().get(key);
+//        RedisData redisData = JSONUtil.toBean(shopJson, RedisData.class);
+//          LocalDateTime expireTime=redisData.getExpireTime();
+//        //判断是否过期
+//        if(expireTime.isAfter(LocalDateTime.now())){
+//            //未过期，直接返回店铺信息
+//            return;
+//           }
 //                    //重建缓存
 //                    this.savaShop2Redis(id,20L);
 //                } catch (Exception e) {
@@ -130,6 +138,15 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 //                Thread.sleep(50);
 //                return queryWithMutex(id);
 //            }
+//         从redis查询商铺缓存
+//        String shopJson = stringRedisTemplate.opsForValue().get(key);
+//        //判断是否存在
+//        if(StrUtil.isNotBlank(shopJson)){
+//            //存在，直接返回
+//            Shop shop = JSONUtil.toBean(shopJson, Shop.class);
+//             unlock(localKey);
+//            return shop;
+//        }
 //            //成功，根据id查询数据库
 //            shop = getById(id);
 //            //模拟重建的延时

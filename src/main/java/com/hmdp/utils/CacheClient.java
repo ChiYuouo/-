@@ -99,6 +99,12 @@ public class CacheClient {
             //成功，开启独立线程实现缓存重建
             CACHE_REBUILD_EXECUTOR.submit(()->{
                 try {
+                    String newjson = stringRedisTemplate.opsForValue().get(key);
+                    RedisData redisData1 = JSONUtil.toBean(newjson, RedisData.class);
+                    LocalDateTime expireTime1=redisData1.getExpireTime();
+                    if(expireTime1.isAfter(LocalDateTime.now())){
+                        return;
+                    }
                     //重建缓存
                     //查询数据库
                     R r1 = dbFallback.apply(id);
