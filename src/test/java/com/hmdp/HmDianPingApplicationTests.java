@@ -56,7 +56,7 @@ class HmDianPingApplicationTests {
     @Test
     void testSaveShop() {
         // 1. 根据 id 查询店铺数据
-        Long id = 1L;
+        Long id = 4L;
         Shop shop = shopService.getById(id);
 
         // 2. 将数据存入 Redis，并设置逻辑过期时间
